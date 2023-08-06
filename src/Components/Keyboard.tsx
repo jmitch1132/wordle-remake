@@ -1,3 +1,4 @@
+import { BackspaceRounded } from "@mui/icons-material";
 import "../Styles/Keyboard.css";
 import clsx from "clsx";
 
@@ -22,13 +23,13 @@ function Keyboard({
           if (!guess) continue;
           for (let i = 0; i < guess.length; i++) {
             if (guess[i] === key && i === correctIndex) {
-              return "correct";
+              return "keyboardCorrect";
             }
           }
         }
-        return "found";
+        return "keyboardFound";
       }
-      return "incorrect";
+      return "keyboardIncorrect";
     }
     return "";
   }
@@ -65,7 +66,7 @@ function Keyboard({
               onClick={() => handleKeyDown(key)}
               key={key}
             >
-              {key}
+              {key === "Backspace" ? <BackspaceRounded /> : key}
             </button>
           )
         )}

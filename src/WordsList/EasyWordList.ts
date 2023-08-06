@@ -23,6 +23,7 @@ export const easyWordList = [
     'EMPTY',
     'EARTH',
     'FLUTE',
+    'FARTS',
     'FRONT',
     'FRUIT',
     'FUNNY',

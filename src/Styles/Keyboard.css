@@ -1,6 +1,6 @@
 .keyboardSection{
     height: 200px;
-    width: 100%;
+    width: 95%;
     display: flex;
     flex-direction: column;
     margin-top: 8%;
@@ -38,3 +38,17 @@
       margin: 0;
     }
   }
+
+  .keyboardCorrect{
+    background-color: #7bc074;
+    transition: all 0.5s ease-in-out;
+  }
+  .keyboardFound{
+    background-color: #dbc85b;
+    transition: all 0.5s ease-in-out;
+  }
+  .keyboardIncorrect{
+    background-color: #737474;
+    transition: all 0.5s ease-in;
+  }
+  
