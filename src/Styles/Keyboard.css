@@ -39,6 +39,14 @@
     }
   }
 
+  .specialKey {
+    flex: 1.5;
+  }
+
+  .secondRow {
+    flex: 0.95;
+  }
+
   .keyboardCorrect{
     background-color: #7bc074;
     transition: all 0.5s ease-in-out;
@@ -51,4 +59,3 @@
     background-color: #737474;
     transition: all 0.5s ease-in;
   }
-  

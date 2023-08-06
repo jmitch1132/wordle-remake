@@ -8,7 +8,7 @@ function App() {
   const [level, setLevel] = useState<string>("");
   return (
     <>
-      <h1>Wordle</h1>
+      <h1 className="wordleHeader">Wordle</h1>
       {level && <Game level={level} setLevel={setLevel} />}
       <div>
         {!level && (

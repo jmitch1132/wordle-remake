@@ -34,6 +34,13 @@ function Keyboard({
     return "";
   }
 
+  function getSpecialKeyClass(key: string) {
+    if (key === "Enter" || key === "Backspace") {
+      return "specialKey";
+    }
+    return "";
+  }
+
   return (
     <div className="keyboardSection">
       <div className="keyboardRow">
@@ -48,21 +55,27 @@ function Keyboard({
         ))}
       </div>
       <div className="keyboardRow">
-        {["a", "s", "d", "f", "g", "h", "j", "k", "l"].map((key) => (
-          <button
-            className={clsx("keyboardButton", getKeyboardClassname(key))}
-            onClick={() => handleKeyDown(key)}
-            key={key}
-          >
-            {key}
-          </button>
-        ))}
+        <div className="keyboardRow secondRow">
+          {["a", "s", "d", "f", "g", "h", "j", "k", "l"].map((key) => (
+            <button
+              className={clsx("keyboardButton", getKeyboardClassname(key))}
+              onClick={() => handleKeyDown(key)}
+              key={key}
+            >
+              {key}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="keyboardRow">
         {["Enter", "z", "x", "c", "v", "b", "n", "m", "Backspace"].map(
           (key) => (
             <button
-              className={clsx("keyboardButton", getKeyboardClassname(key))}
+              className={clsx(
+                "keyboardButton",
+                getKeyboardClassname(key),
+                getSpecialKeyClass(key)
+              )}
               onClick={() => handleKeyDown(key)}
               key={key}
             >

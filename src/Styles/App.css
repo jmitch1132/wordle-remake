@@ -4,6 +4,11 @@
     display:flex; 
     font-family: 'Franklin Gothic';
 }
+
+.wordleHeader {
+    margin-bottom: 0;;
+}
+
 .modalBody h4{
     margin-top: 0;
 }
