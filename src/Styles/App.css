@@ -1,0 +1,14 @@
+.modalHeader{
+    margin-bottom: 0;
+    justify-content: center;
+    display:flex;
+}
+.modalBody h4{
+    margin-top: 0;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
