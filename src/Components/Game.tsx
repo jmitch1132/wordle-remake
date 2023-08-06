@@ -2,9 +2,23 @@ import { useState } from "react";
 import { easyWordList, hardWordList } from "../WordsList";
 import Board from "./Board";
 import "../Styles/Game.css";
-import { Button, Dialog, DialogContent } from "@mui/material";
+import CloseRounded from "@mui/icons-material/CloseRounded";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+} from "@mui/material";
 
-function Game({ difficultyLevel }: { difficultyLevel: string }) {
+function Game({
+  level,
+  setLevel,
+}: {
+  level: string;
+  setLevel: (level: string) => void;
+}) {
   const [answer, setAnswer] = useState(() => getWord());
   const [guesses, setGuesses] = useState<string[]>(Array(6).fill(null));
   const [gameOver, setGameOver] = useState(false);
@@ -21,7 +35,7 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
   }
 
   function getWord() {
-    const list = difficultyLevel === "easy" ? easyWordList : hardWordList;
+    const list = level === "easy" ? easyWordList : hardWordList;
     const index = Math.floor(Math.random() * list.length);
     return list[index];
   }
@@ -46,6 +60,10 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
     return setShowModal(false);
   }
 
+  function handleChangeLevel() {
+    setLevel("");
+  }
+
   return (
     <>
       <Board
@@ -61,6 +79,7 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
         <Alert
           handleClose={handleClose}
           handlePlayAgain={handlePlayAgain}
+          handleChangeLevel={handleChangeLevel}
           winGame={winGame}
           answer={answer}
         />
@@ -72,26 +91,46 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
 function Alert({
   handleClose,
   handlePlayAgain,
+  handleChangeLevel,
   winGame,
   answer,
 }: {
   handleClose: () => void;
   handlePlayAgain: () => void;
+  handleChangeLevel: () => void;
   winGame: boolean;
   answer: string;
 }) {
   return (
     <div>
-      <Dialog open onClose={handleClose}>
+      <Dialog open>
+        <DialogTitle>
+          Results
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseRounded />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
-          {winGame
-            ? `You won! You guessed the word: ${answer}`
-            : `You lost! The word was: ${answer}`}
+          <DialogContentText>
+            <div className="results">
+              {winGame
+                ? `You won! You guessed the word: ${answer}`
+                : `You lost! The word was: ${answer}`}
+            </div>
+          </DialogContentText>
         </DialogContent>
-        <span className="actions">
-          <Button onClick={handleClose}>Close</Button>
+        <div className="actions">
           <Button onClick={handlePlayAgain}>Play Again</Button>
-        </span>
+          <Button onClick={handleChangeLevel}>Change Level</Button>
+        </div>
       </Dialog>
     </div>
   );

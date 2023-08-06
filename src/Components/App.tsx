@@ -4,13 +4,13 @@ import "../Styles/App.css";
 import { Button, Dialog, DialogContent } from "@mui/material";
 
 function App() {
-  const [difficultyLevel, setDifficultyLevel] = useState<string>("");
+  const [level, setLevel] = useState<string>("");
   return (
     <>
       <h1>Wordle</h1>
-      {difficultyLevel && <Game difficultyLevel={difficultyLevel} />}
+      {level && <Game level={level} setLevel={setLevel} />}
       <div>
-        {!difficultyLevel && (
+        {!level && (
           <Dialog open>
             <h3 className="modalHeader">Wordle</h3>
 
@@ -26,8 +26,8 @@ function App() {
               </ol>
             </DialogContent>
             <span className="buttons">
-              <Button onClick={() => setDifficultyLevel("easy")}>Easy</Button>
-              <Button onClick={() => setDifficultyLevel("hard")}>Hard</Button>
+              <Button onClick={() => setLevel("easy")}>Easy</Button>
+              <Button onClick={() => setLevel("hard")}>Hard</Button>
             </span>
           </Dialog>
         )}
