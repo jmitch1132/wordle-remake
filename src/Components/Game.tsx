@@ -1,16 +1,9 @@
 import { useState } from "react";
+import { Button } from "@mui/material";
+
 import { easyWordList, hardWordList } from "../WordsList";
 import Board from "./Board";
 import "../Styles/Game.css";
-import CloseRounded from "@mui/icons-material/CloseRounded";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-} from "@mui/material";
 
 function Game({
   level,
@@ -23,7 +16,7 @@ function Game({
   const [guesses, setGuesses] = useState<string[]>(Array(6).fill(null));
   const [gameOver, setGameOver] = useState(false);
   const [winGame, setWinGame] = useState(false);
-  const [showModal, setShowModal] = useState(gameOver);
+  const [showModal, setShowModal] = useState(false);
   const [guessedLetterSet, setGuessedLetterSet] = useState(new Set<string>());
 
   function addGuessedLetter(keys: string[]) {
@@ -54,10 +47,7 @@ function Game({
     setGameOver(false);
     setShowModal(false);
     setGuessedLetterSet(new Set<string>());
-  }
-
-  function handleClose() {
-    return setShowModal(false);
+    setWinGame(false);
   }
 
   function handleChangeLevel() {
@@ -77,7 +67,6 @@ function Game({
       />
       {showModal && (
         <Alert
-          handleClose={handleClose}
           handlePlayAgain={handlePlayAgain}
           handleChangeLevel={handleChangeLevel}
           winGame={winGame}
@@ -89,49 +78,42 @@ function Game({
 }
 
 function Alert({
-  handleClose,
   handlePlayAgain,
   handleChangeLevel,
   winGame,
   answer,
 }: {
-  handleClose: () => void;
   handlePlayAgain: () => void;
   handleChangeLevel: () => void;
   winGame: boolean;
   answer: string;
 }) {
   return (
-    <div>
-      <Dialog open>
-        <DialogTitle>
-          Results
-          <IconButton
-            onClick={handleClose}
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseRounded />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <div className="results">
-              {winGame
-                ? `You won! You guessed the word: ${answer}`
-                : `You lost! The word was: ${answer}`}
-            </div>
-          </DialogContentText>
-        </DialogContent>
-        <div className="actions">
-          <Button onClick={handlePlayAgain}>Play Again</Button>
-          <Button onClick={handleChangeLevel}>Change Level</Button>
+    <div className="modal">
+      {winGame && (
+        <div>
+          <h1>You Win!</h1>
+          <p className="answer winner">{answer}</p>
+          <span className="actions">
+            <Button onClick={handlePlayAgain}>Play Again</Button>
+            <Button onClick={handleChangeLevel}>Change Level</Button>
+          </span>
         </div>
-      </Dialog>
+      )}
+      {!winGame && (
+        <div>
+          <h1>Loser!</h1>
+          <p className="answer loser">{answer}</p>
+          <span className="actions">
+            <Button className="playAgain" onClick={handlePlayAgain}>
+              Play Again
+            </Button>
+            <Button className="changeLevel" onClick={handleChangeLevel}>
+              Change Level
+            </Button>
+          </span>
+        </div>
+      )}
     </div>
   );
 }

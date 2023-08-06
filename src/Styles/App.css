@@ -1,7 +1,8 @@
 .modalHeader{
     margin-bottom: 0;
     justify-content: center;
-    display:flex;
+    display:flex; 
+    font-family: 'Franklin Gothic';
 }
 .modalBody h4{
     margin-top: 0;
@@ -11,4 +12,37 @@
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
+    column-gap: 50px;
+    color:white;
+    margin-bottom: 10px;;
 }
+
+.buttons .easy{
+    border: 1px solid #7bc074;
+    background-color: #7bc074;
+    color:white;
+}
+.buttons .hard{
+    border: 1px solid #c70707;
+    background-color: #c70707;
+    color:white;
+}
+
+.buttons .easy:hover{
+    border: 1px solid #7bc074;
+    background-color: white;
+    color:#7bc074;
+}
+.buttons .hard:hover{
+    border: 1px solid #c70707;
+    background-color: white;
+    color:#c70707;
+}
+
+h1{
+    font-family: 'Franklin Gothic'
+}
+
+li:not(:last-child) { 
+    margin-bottom: 5px;  
+ }
