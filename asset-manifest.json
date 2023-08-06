@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/wordle-remake/static/css/main.e538d28e.css",
+    "main.js": "/wordle-remake/static/js/main.c711f94a.js",
+    "index.html": "/wordle-remake/index.html",
+    "main.e538d28e.css.map": "/wordle-remake/static/css/main.e538d28e.css.map",
+    "main.c711f94a.js.map": "/wordle-remake/static/js/main.c711f94a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e538d28e.css",
+    "static/js/main.c711f94a.js"
+  ]
+}
