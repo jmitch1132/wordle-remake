@@ -3,12 +3,6 @@ h1 {
   display: flex;
 }
 
-h4 {
-  display:flex;
-  justify-content: center;
-  margin-bottom: 0;;
-}
-
 .results{
   display: flex;
   justify-content: center;

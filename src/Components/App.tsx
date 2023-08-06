@@ -12,7 +12,7 @@ function App() {
       <div>
         {!level && (
           <Dialog open>
-            <h3 className="modalHeader">Wordle</h3>
+            <h2 className="modalHeader">Wordle</h2>
 
             <DialogContent className="modalBody">
               <h4>How To Play:</h4>
