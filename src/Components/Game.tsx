@@ -4,12 +4,19 @@ import Board from "./Board";
 import "../Styles/Game.css";
 import { Button, Dialog, DialogContent } from "@mui/material";
 
+interface AlertProps {
+  handleClose: () => void;
+  handlePlayAgain: () => void;
+  winGame: boolean;
+  answer: string;
+}
+
 function Game({ difficultyLevel }: { difficultyLevel: string }) {
   const [answer, setAnswer] = useState(() => getWord());
   const [guesses, setGuesses] = useState<string[]>(Array(6).fill(null));
   const [gameOver, setGameOver] = useState(false);
   const [winGame, setWinGame] = useState(false);
-  const [showModal, setShowModal] = useState(gameOver);
+  const [showModal, setShowModal] = useState(false);
 
   function getWord() {
     const list = difficultyLevel === "easy" ? easyWordList : hardWordList;
@@ -57,24 +64,14 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
   );
 }
 
-function Alert({
-  handleClose,
-  handlePlayAgain,
-  winGame,
-  answer,
-}: {
-  handleClose: () => void;
-  handlePlayAgain: () => void;
-  winGame: boolean;
-  answer: string;
-}) {
+function Alert({ handleClose, handlePlayAgain, winGame, answer }: AlertProps) {
   return (
     <div>
       <Dialog open onClose={handleClose}>
         <DialogContent>
           {winGame
             ? `You won! You guessed the word: ${answer}`
-            : `You lost! The word was: ${answer}`}
+            : `Loser! The word was: ${answer}`}
         </DialogContent>
         <span className="actions">
           <Button onClick={handleClose}>Close</Button>

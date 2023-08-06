@@ -4,19 +4,21 @@ import clsx from "clsx";
 
 const WORD_LENGTH = 5;
 
+interface BoardProps {
+  answer: string;
+  gameOver: boolean;
+  guesses: string[];
+  handleGameOver: (winGame: boolean) => void;
+  setGuesses: (guesses: string[]) => void;
+}
+
 function Board({
   answer,
   handleGameOver,
   gameOver,
   guesses,
   setGuesses,
-}: {
-  answer: string;
-  handleGameOver: (gameOver: boolean) => void;
-  gameOver: boolean;
-  guesses: string[];
-  setGuesses: (guesses: string[]) => void;
-}) {
+}: BoardProps) {
   const [currentGuess, setCurrentGuess] = useState("");
 
   useEffect(() => {
@@ -27,29 +29,24 @@ function Board({
         key === "Backspace"
       );
     };
+
     const handleKeyDown = (e: { key: string }) => {
       if (gameOver || !isValidKey(e.key)) {
         return;
-      }
-      if (e.key === "Backspace") {
+      } else if (e.key === "Backspace") {
         setCurrentGuess(currentGuess.slice(0, -1));
-        return;
-      }
-      if (e.key === "Enter") {
-        if (currentGuess.length !== 5) return;
+      } else if (e.key === "Enter") {
+        if (currentGuess.length !== WORD_LENGTH) return;
         if (answer === currentGuess) {
           handleGameOver(true);
         }
         const newGuesses = [...guesses];
         const guessIndex = guesses.findIndex((g) => g == null);
-        if (guessIndex === 5) handleGameOver(false);
+        if (guessIndex === WORD_LENGTH) handleGameOver(false);
         newGuesses[guessIndex] = currentGuess;
         setGuesses(newGuesses);
         setCurrentGuess("");
-        return;
-      }
-
-      if (currentGuess.length < 5) {
+      } else if (currentGuess.length < WORD_LENGTH) {
         setCurrentGuess((old) => old + e.key.toUpperCase());
       }
     };
@@ -91,9 +88,11 @@ function Row({
     const letter = guess[i];
     const found = answer.includes(letter);
     const isCorrect = answer[i] === letter;
-    const colorClass = oldGuess ? getClassName(isCorrect, found) : "";
     rows.push(
-      <div className={clsx("box", colorClass)} key={i}>
+      <div
+        className={clsx("box", getColorClassname(isCorrect, found, oldGuess))}
+        key={i}
+      >
         {letter}
       </div>
     );
@@ -101,7 +100,14 @@ function Row({
   return <div className="row">{rows}</div>;
 }
 
-function getClassName(isCorrect: boolean, found: boolean) {
+function getColorClassname(
+  isCorrect: boolean,
+  found: boolean,
+  oldGuess: boolean
+) {
+  if (!oldGuess) {
+    return "";
+  }
   if (isCorrect) {
     return "correct";
   }
