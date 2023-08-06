@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import "./Board.css";
+import "../Styles/Board.css";
 import clsx from "clsx";
 
 const WORD_LENGTH = 5;
 
 function Board({
   answer,
-  setGameOver,
+  handleGameOver,
   gameOver,
   guesses,
   setGuesses,
 }: {
   answer: string;
-  setGameOver: (gameOver: boolean) => void;
+  handleGameOver: (gameOver: boolean) => void;
   gameOver: boolean;
   guesses: string[];
   setGuesses: (guesses: string[]) => void;
@@ -20,8 +20,15 @@ function Board({
   const [currentGuess, setCurrentGuess] = useState("");
 
   useEffect(() => {
+    const isValidKey = (key: string) => {
+      return (
+        (key.length === 1 && key.match(/[a-zA-Z]/i)) ||
+        key === "Enter" ||
+        key === "Backspace"
+      );
+    };
     const handleKeyDown = (e: { key: string }) => {
-      if (gameOver) {
+      if (gameOver || !isValidKey(e.key)) {
         return;
       }
       if (e.key === "Backspace") {
@@ -29,33 +36,31 @@ function Board({
         return;
       }
       if (e.key === "Enter") {
-        if (currentGuess.length !== 5) {
-          return;
-        }
+        if (currentGuess.length !== 5) return;
         if (answer === currentGuess) {
-          setGameOver(true);
+          handleGameOver(true);
         }
         const newGuesses = [...guesses];
         const guessIndex = guesses.findIndex((g) => g == null);
+        if (guessIndex === 5) handleGameOver(false);
         newGuesses[guessIndex] = currentGuess;
         setGuesses(newGuesses);
         setCurrentGuess("");
-      }
-      if (currentGuess.length >= 5) {
         return;
       }
-      const pressedKey = e.key.toUpperCase();
-      setCurrentGuess((old) => old + pressedKey);
+
+      if (currentGuess.length < 5) {
+        setCurrentGuess((old) => old + e.key.toUpperCase());
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentGuess, answer, gameOver, guesses, setGameOver, setGuesses]);
+  }, [currentGuess, answer, gameOver, guesses, handleGameOver, setGuesses]);
 
   return (
     <>
-      <h1 className="header">Wordle</h1>
       <div className="board">
         {guesses.map((guess, index) => {
           const isCurrent = index === guesses.findIndex((g) => g == null);
@@ -82,7 +87,6 @@ function Row({
   oldGuess: boolean;
 }) {
   const rows = [];
-
   for (let i = 0; i < WORD_LENGTH; i++) {
     const letter = guess[i];
     const found = answer.includes(letter);

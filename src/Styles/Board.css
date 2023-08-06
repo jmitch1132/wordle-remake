@@ -21,11 +21,6 @@
   display:flex;
 }
 
-.header{
-  justify-content: center;
-  display: flex;
-}
-
 .correct{
   background-color: #7bc074;
 }
