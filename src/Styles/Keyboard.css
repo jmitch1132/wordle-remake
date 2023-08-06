@@ -1,0 +1,40 @@
+.keyboardSection{
+    height: 200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8%;
+  }
+  
+  .keyboardRow {
+    width: 100%;
+    margin: 0 auto 8px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .keyboardButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0 6px 0 0;
+    height: 58px;
+    flex: 1;
+  
+    border: 0;
+    border-radius: 4px;
+    background-color: #989b9b;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #eff0f1;
+  
+    cursor: pointer;
+    user-select: none;
+  
+    &:last-of-type {
+      margin: 0;
+    }
+  }

@@ -10,6 +10,15 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
   const [gameOver, setGameOver] = useState(false);
   const [winGame, setWinGame] = useState(false);
   const [showModal, setShowModal] = useState(gameOver);
+  const [guessedLetterSet, setGuessedLetterSet] = useState(new Set<string>());
+
+  function addGuessedLetter(keys: string[]) {
+    const updatedSet = new Set(guessedLetterSet);
+    for (const key of keys) {
+      updatedSet.add(key);
+    }
+    setGuessedLetterSet(updatedSet);
+  }
 
   function getWord() {
     const list = difficultyLevel === "easy" ? easyWordList : hardWordList;
@@ -30,6 +39,7 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
     setGuesses(Array(6).fill(null));
     setGameOver(false);
     setShowModal(false);
+    setGuessedLetterSet(new Set<string>());
   }
 
   function handleClose() {
@@ -44,6 +54,8 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
         guesses={guesses}
         setGuesses={setGuesses}
         gameOver={gameOver}
+        guessedLetterSet={guessedLetterSet}
+        addGuessedLetter={addGuessedLetter}
       />
       {showModal && (
         <Alert
