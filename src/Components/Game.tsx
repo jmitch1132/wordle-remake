@@ -71,6 +71,7 @@ function Game({
           handleChangeLevel={handleChangeLevel}
           winGame={winGame}
           answer={answer}
+          guesses={guesses}
         />
       )}
     </>
@@ -82,17 +83,23 @@ function Alert({
   handleChangeLevel,
   winGame,
   answer,
+  guesses,
 }: {
   handlePlayAgain: () => void;
   handleChangeLevel: () => void;
   winGame: boolean;
   answer: string;
+  guesses: string[];
 }) {
+  const index = guesses.findIndex((g) => g == null);
+  const turns = index !== -1 ? index : 6;
+
   return (
     <div className="modal">
       {winGame && (
         <div>
           <h1>You Win!</h1>
+          <p className="desc">You found the word in {turns} of 6 moves</p>
           <p className="answer winner">{answer}</p>
           <span className="actions">
             <Button onClick={handlePlayAgain}>Play Again</Button>

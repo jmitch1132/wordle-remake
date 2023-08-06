@@ -61,3 +61,10 @@ h1 {
   color: white;
  
 }
+.desc{
+  display:flex;
+  justify-content: center;
+  font-style: italic;
+  font-family: 'Franklin Gothic';
+}
+
