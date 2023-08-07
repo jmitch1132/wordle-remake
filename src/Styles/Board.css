@@ -6,6 +6,18 @@
   align-items: center;
   
 } 
+.game{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  flex-grow: 1;
+}
 
 .row{
   display:flex;
@@ -15,18 +27,41 @@
 .box{
   height:50px;
   width:50px;
-  border: 1px solid black;
+  border: 2px solid black;
   align-items: center;
   justify-content: center;
   display:flex;
+  font-size: large;
+  font-weight: bold;
+  font-family: 'Franklin Gothic';
 }
 
 .correct{
   background-color: #7bc074;
+  animation-name: greenFade;
+  animation-duration: 0.5s;
 }
 .found{
   background-color: #dbc85b;
+  animation-name: yellowFade;
+  animation-duration: 0.5s;
 }
 .incorrect{
-  background-color: #8d9194;
+  background-color: #7d7e7e;
+  animation-name: greyFade;
+  animation-duration: 0.5s;
 }
+
+@keyframes greenFade {
+  from {background-color: white;}
+  to {background-color: #7bc074;}
+}
+@keyframes yellowFade {
+  from {background-color: white;}
+  to {background-color: #dbc85b;}
+}
+@keyframes greyFade {
+  from {background-color: white;}
+  to {background-color: #7d7e7e;}
+}
+

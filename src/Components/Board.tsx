@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import Keyboard from "./Keyboard";
 import "../Styles/Board.css";
 import clsx from "clsx";
 
@@ -6,10 +7,12 @@ const WORD_LENGTH = 5;
 
 interface BoardProps {
   answer: string;
+  handleGameOver: (gameOver: boolean) => void;
   gameOver: boolean;
   guesses: string[];
-  handleGameOver: (winGame: boolean) => void;
   setGuesses: (guesses: string[]) => void;
+  guessedLetterSet: ReadonlySet<string>;
+  addGuessedLetter: (guess: string[]) => void;
 }
 
 function Board({
@@ -18,25 +21,29 @@ function Board({
   gameOver,
   guesses,
   setGuesses,
+  guessedLetterSet,
+  addGuessedLetter,
 }: BoardProps) {
   const [currentGuess, setCurrentGuess] = useState("");
+  const isValidKey = (key: string) => {
+    return (
+      (key.length === 1 && key.match(/[a-zA-Z]/i)) ||
+      key === "Enter" ||
+      key === "Backspace"
+    );
+  };
 
-  useEffect(() => {
-    const isValidKey = (key: string) => {
-      return (
-        (key.length === 1 && key.match(/[a-zA-Z]/i)) ||
-        key === "Enter" ||
-        key === "Backspace"
-      );
-    };
-
-    const handleKeyDown = (e: { key: string }) => {
-      if (gameOver || !isValidKey(e.key)) {
+  const handleKeyDown = useCallback(
+    (key: string) => {
+      if (gameOver || !isValidKey(key)) {
         return;
-      } else if (e.key === "Backspace") {
+      }
+      if (key === "Backspace") {
         setCurrentGuess(currentGuess.slice(0, -1));
-      } else if (e.key === "Enter") {
-        if (currentGuess.length !== WORD_LENGTH) return;
+        return;
+      }
+      if (key === "Enter") {
+        if (currentGuess.length !== 5) return;
         if (answer === currentGuess) {
           handleGameOver(true);
         }
@@ -44,20 +51,38 @@ function Board({
         const guessIndex = guesses.findIndex((g) => g == null);
         if (guessIndex === WORD_LENGTH) handleGameOver(false);
         newGuesses[guessIndex] = currentGuess;
+        addGuessedLetter(currentGuess.split(""));
         setGuesses(newGuesses);
         setCurrentGuess("");
-      } else if (currentGuess.length < WORD_LENGTH) {
-        setCurrentGuess((old) => old + e.key.toUpperCase());
+        return;
       }
+
+      if (currentGuess.length < 5) {
+        setCurrentGuess((old) => old + key.toUpperCase());
+      }
+    },
+    [
+      answer,
+      currentGuess,
+      gameOver,
+      guesses,
+      handleGameOver,
+      setGuesses,
+      addGuessedLetter,
+    ]
+  );
+
+  useEffect(() => {
+    const handleType = (e: any) => {
+      handleKeyDown(e.key);
     };
+    document.addEventListener("keydown", handleType);
 
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentGuess, answer, gameOver, guesses, handleGameOver, setGuesses]);
+    return () => document.removeEventListener("keydown", handleType);
+  }, [handleKeyDown]);
 
   return (
-    <>
+    <div className="game">
       <div className="board">
         {guesses.map((guess, index) => {
           const isCurrent = index === guesses.findIndex((g) => g == null);
@@ -70,7 +95,13 @@ function Board({
           );
         })}
       </div>
-    </>
+      <Keyboard
+        answer={answer}
+        handleKeyDown={handleKeyDown}
+        guessedLetters={guessedLetterSet}
+        guesses={guesses}
+      />
+    </div>
   );
 }
 

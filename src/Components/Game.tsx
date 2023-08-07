@@ -1,25 +1,41 @@
 import { useState } from "react";
+import { Button } from "@mui/material";
+
 import { easyWordList, hardWordList } from "../WordsList";
 import Board from "./Board";
 import "../Styles/Game.css";
-import { Button, Dialog, DialogContent } from "@mui/material";
 
 interface AlertProps {
-  handleClose: () => void;
   handlePlayAgain: () => void;
+  handleChangeLevel: () => void;
   winGame: boolean;
   answer: string;
+  guesses: string[];
 }
-
-function Game({ difficultyLevel }: { difficultyLevel: string }) {
+function Game({
+  level,
+  setLevel,
+}: {
+  level: string;
+  setLevel: (level: string) => void;
+}) {
   const [answer, setAnswer] = useState(() => getWord());
   const [guesses, setGuesses] = useState<string[]>(Array(6).fill(null));
   const [gameOver, setGameOver] = useState(false);
   const [winGame, setWinGame] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [guessedLetterSet, setGuessedLetterSet] = useState(new Set<string>());
+
+  function addGuessedLetter(keys: string[]) {
+    const updatedSet = new Set(guessedLetterSet);
+    for (const key of keys) {
+      updatedSet.add(key);
+    }
+    setGuessedLetterSet(updatedSet);
+  }
 
   function getWord() {
-    const list = difficultyLevel === "easy" ? easyWordList : hardWordList;
+    const list = level === "easy" ? easyWordList : hardWordList;
     const index = Math.floor(Math.random() * list.length);
     return list[index];
   }
@@ -37,10 +53,12 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
     setGuesses(Array(6).fill(null));
     setGameOver(false);
     setShowModal(false);
+    setGuessedLetterSet(new Set<string>());
+    setWinGame(false);
   }
 
-  function handleClose() {
-    return setShowModal(false);
+  function handleChangeLevel() {
+    setLevel("");
   }
 
   return (
@@ -51,33 +69,59 @@ function Game({ difficultyLevel }: { difficultyLevel: string }) {
         guesses={guesses}
         setGuesses={setGuesses}
         gameOver={gameOver}
+        guessedLetterSet={guessedLetterSet}
+        addGuessedLetter={addGuessedLetter}
       />
       {showModal && (
         <Alert
-          handleClose={handleClose}
           handlePlayAgain={handlePlayAgain}
+          handleChangeLevel={handleChangeLevel}
           winGame={winGame}
           answer={answer}
+          guesses={guesses}
         />
       )}
     </>
   );
 }
 
-function Alert({ handleClose, handlePlayAgain, winGame, answer }: AlertProps) {
+function Alert({
+  handlePlayAgain,
+  handleChangeLevel,
+  winGame,
+  answer,
+  guesses,
+}: AlertProps) {
+  const index = guesses.findIndex((g) => g == null);
+  const turns = index !== -1 ? index : 6;
+
   return (
-    <div>
-      <Dialog open onClose={handleClose}>
-        <DialogContent>
-          {winGame
-            ? `You won! You guessed the word: ${answer}`
-            : `Loser! The word was: ${answer}`}
-        </DialogContent>
-        <span className="actions">
-          <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handlePlayAgain}>Play Again</Button>
-        </span>
-      </Dialog>
+    <div className="modal">
+      {winGame && (
+        <div>
+          <h1>You Win!</h1>
+          <p className="desc">You found the word in {turns} of 6 moves</p>
+          <p className="answer winner">{answer}</p>
+          <span className="actions">
+            <Button onClick={handlePlayAgain}>Play Again</Button>
+            <Button onClick={handleChangeLevel}>Change Level</Button>
+          </span>
+        </div>
+      )}
+      {!winGame && (
+        <div>
+          <h1>Loser!</h1>
+          <p className="answer loser">{answer}</p>
+          <span className="actions">
+            <Button className="playAgain" onClick={handlePlayAgain}>
+              Play Again
+            </Button>
+            <Button className="changeLevel" onClick={handleChangeLevel}>
+              Change Level
+            </Button>
+          </span>
+        </div>
+      )}
     </div>
   );
 }
