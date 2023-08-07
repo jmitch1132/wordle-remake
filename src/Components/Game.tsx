@@ -94,34 +94,25 @@ function Alert({
 }: AlertProps) {
   const index = guesses.findIndex((g) => g == null);
   const turns = index !== -1 ? index : 6;
+  const isWinner = winGame ? "winner" : "loser";
 
   return (
     <div className="modal">
-      {winGame && (
-        <div>
-          <h1>You Win!</h1>
+      <div>
+        <h1>{winGame ? "You Win!" : "Loser!"}</h1>
+        {winGame && (
           <p className="desc">You found the word in {turns} of 6 moves</p>
-          <p className="answer winner">{answer}</p>
-          <span className="actions">
-            <Button onClick={handlePlayAgain}>Play Again</Button>
-            <Button onClick={handleChangeLevel}>Change Level</Button>
-          </span>
-        </div>
-      )}
-      {!winGame && (
-        <div>
-          <h1>Loser!</h1>
-          <p className="answer loser">{answer}</p>
-          <span className="actions">
-            <Button className="playAgain" onClick={handlePlayAgain}>
-              Play Again
-            </Button>
-            <Button className="changeLevel" onClick={handleChangeLevel}>
-              Change Level
-            </Button>
-          </span>
-        </div>
-      )}
+        )}
+        <p className={`answer ${isWinner}`}>{answer}</p>
+        <span className="actions">
+          <Button className="playAgain" onClick={handlePlayAgain}>
+            Play Again
+          </Button>
+          <Button className="changeLevel" onClick={handleChangeLevel}>
+            Change Level
+          </Button>
+        </span>
+      </div>
     </div>
   );
 }
