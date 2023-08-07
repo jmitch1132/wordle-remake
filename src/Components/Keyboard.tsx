@@ -2,6 +2,12 @@ import { BackspaceRounded } from "@mui/icons-material";
 import "../Styles/Keyboard.css";
 import clsx from "clsx";
 
+const rows = [
+  ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+  ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+  ["Enter", "z", "x", "c", "v", "b", "n", "m", "Backspace"],
+];
+
 interface KeyboardProps {
   handleKeyDown: (key: string) => void;
   guessedLetters: ReadonlySet<string>;
@@ -16,76 +22,49 @@ function Keyboard({
 }: KeyboardProps) {
   function getKeyboardClassname(input: string) {
     const key = input.toUpperCase();
-    if (guessedLetters.has(key)) {
-      if (answer.includes(key)) {
-        const correctIndex = answer.indexOf(key);
-        for (const guess of guesses) {
-          if (!guess) continue;
-          for (let i = 0; i < guess.length; i++) {
-            if (guess[i] === key && i === correctIndex) {
-              return "keyboardCorrect";
-            }
-          }
+    if (!guessedLetters.has(key)) return "";
+
+    if (answer.includes(key)) {
+      const correctIndex = answer.indexOf(key);
+      for (const guess of guesses) {
+        if (guess && guess[correctIndex] === key) {
+          return "keyboardCorrect";
         }
-        return "keyboardFound";
       }
-      return "keyboardIncorrect";
+      return "keyboardFound";
     }
-    return "";
+    return "keyboardIncorrect";
   }
 
-  function getSpecialKeyClass(key: string) {
-    if (key === "Enter" || key === "Backspace") {
-      return "specialKey";
-    }
-    return "";
+  function renderKeyboardButton(key: string) {
+    return (
+      <button
+        className={clsx(
+          "keyboardButton",
+          getKeyboardClassname(key),
+          getSpecialKeyClass(key)
+        )}
+        onClick={() => handleKeyDown(key)}
+        key={key}
+      >
+        {key === "Backspace" ? <BackspaceRounded /> : key}
+      </button>
+    );
   }
 
   return (
     <div className="keyboardSection">
-      <div className="keyboardRow">
-        {["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"].map((key) => (
-          <button
-            className={clsx("keyboardButton", getKeyboardClassname(key))}
-            onClick={() => handleKeyDown(key)}
-            key={key}
-          >
-            {key}
-          </button>
-        ))}
-      </div>
-      <div className="keyboardRow">
-        <div className="keyboardRow secondRow">
-          {["a", "s", "d", "f", "g", "h", "j", "k", "l"].map((key) => (
-            <button
-              className={clsx("keyboardButton", getKeyboardClassname(key))}
-              onClick={() => handleKeyDown(key)}
-              key={key}
-            >
-              {key}
-            </button>
-          ))}
+      {rows.map((row, index) => (
+        <div className="keyboardRow" key={index}>
+          {row.map(renderKeyboardButton)}
         </div>
-      </div>
-      <div className="keyboardRow">
-        {["Enter", "z", "x", "c", "v", "b", "n", "m", "Backspace"].map(
-          (key) => (
-            <button
-              className={clsx(
-                "keyboardButton",
-                getKeyboardClassname(key),
-                getSpecialKeyClass(key)
-              )}
-              onClick={() => handleKeyDown(key)}
-              key={key}
-            >
-              {key === "Backspace" ? <BackspaceRounded /> : key}
-            </button>
-          )
-        )}
-      </div>
+      ))}
     </div>
   );
+}
+
+function getSpecialKeyClass(key: string) {
+  return ["Enter", "Backspace"].includes(key) ? "specialKey" : "";
 }
 
 export default Keyboard;

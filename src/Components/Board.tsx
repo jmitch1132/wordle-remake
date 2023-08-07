@@ -5,6 +5,16 @@ import clsx from "clsx";
 
 const WORD_LENGTH = 5;
 
+interface BoardProps {
+  answer: string;
+  handleGameOver: (gameOver: boolean) => void;
+  gameOver: boolean;
+  guesses: string[];
+  setGuesses: (guesses: string[]) => void;
+  guessedLetterSet: ReadonlySet<string>;
+  addGuessedLetter: (guess: string[]) => void;
+}
+
 function Board({
   answer,
   handleGameOver,
@@ -13,15 +23,7 @@ function Board({
   setGuesses,
   guessedLetterSet,
   addGuessedLetter,
-}: {
-  answer: string;
-  handleGameOver: (gameOver: boolean) => void;
-  gameOver: boolean;
-  guesses: string[];
-  setGuesses: (guesses: string[]) => void;
-  guessedLetterSet: ReadonlySet<string>;
-  addGuessedLetter: (guess: string[]) => void;
-}) {
+}: BoardProps) {
   const [currentGuess, setCurrentGuess] = useState("");
   const isValidKey = (key: string) => {
     return (
@@ -47,7 +49,7 @@ function Board({
         }
         const newGuesses = [...guesses];
         const guessIndex = guesses.findIndex((g) => g == null);
-        if (guessIndex === 5) handleGameOver(false);
+        if (guessIndex === WORD_LENGTH) handleGameOver(false);
         newGuesses[guessIndex] = currentGuess;
         addGuessedLetter(currentGuess.split(""));
         setGuesses(newGuesses);
@@ -117,9 +119,11 @@ function Row({
     const letter = guess[i];
     const found = answer.includes(letter);
     const isCorrect = answer[i] === letter;
-    const colorClass = oldGuess ? getClassName(isCorrect, found) : "";
     rows.push(
-      <div className={clsx("box", colorClass)} key={i}>
+      <div
+        className={clsx("box", getColorClassname(isCorrect, found, oldGuess))}
+        key={i}
+      >
         {letter}
       </div>
     );
@@ -127,7 +131,14 @@ function Row({
   return <div className="row">{rows}</div>;
 }
 
-function getClassName(isCorrect: boolean, found: boolean) {
+function getColorClassname(
+  isCorrect: boolean,
+  found: boolean,
+  oldGuess: boolean
+) {
+  if (!oldGuess) {
+    return "";
+  }
   if (isCorrect) {
     return "correct";
   }

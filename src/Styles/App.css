@@ -6,7 +6,7 @@
 }
 
 .wordleHeader {
-    margin-bottom: 0;;
+    margin-bottom: 0;
 }
 
 .modalBody h4{
@@ -16,10 +16,9 @@
 .buttons{
     display: flex;
     justify-content: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     column-gap: 50px;
     color:white;
-    margin-bottom: 10px;;
 }
 
 .buttons .easy{
@@ -60,12 +59,10 @@ li:not(:last-child) {
 
  .colors svg {
     vertical-align: middle;
-
  }
 
  .correctCircle svg {
     color: #7bc074;
-    vertical-align: middle;
  }
  .foundCircle svg {
     color: #dbc85b;
