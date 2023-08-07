@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+![image](https://github.com/jmitch1132/wordle-remake/assets/73263392/860e26ce-1d0f-4cdb-82e3-ae62e36f5476)
+
+![image](https://github.com/jmitch1132/wordle-remake/assets/73263392/dcf2c9e6-0eff-4732-92db-07a30d6df95a)
+
+![image](https://github.com/jmitch1132/wordle-remake/assets/73263392/b279bef6-980a-42a4-9779-db26a2b30d14)
+
 ## How To Use
 
 ```bash
