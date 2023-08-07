@@ -29,7 +29,7 @@ function App() {
                 </li>
                 <li>Hit Enter to submit your guess</li>
                 <li>
-                  The color of the tiles will change color to guide you
+                  The tiles will change color to guide you
                   <div className="colors">
                     <span className="correctCircle">
                       <CircleIcon /> Correct letter and spot
