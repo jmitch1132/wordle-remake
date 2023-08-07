@@ -51,3 +51,25 @@ h1{
 li:not(:last-child) { 
     margin-bottom: 5px;  
  }
+
+ .colors {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+ }
+
+ .colors svg {
+    vertical-align: middle;
+
+ }
+
+ .correctCircle svg {
+    color: #7bc074;
+    vertical-align: middle;
+ }
+ .foundCircle svg {
+    color: #dbc85b;
+ }
+ .incorrectCircle svg {
+    color: #7d7e7e;
+ }

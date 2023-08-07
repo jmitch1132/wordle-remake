@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Dialog, DialogContent } from "@mui/material";
+import CircleIcon from "@mui/icons-material/Circle";
 
 import Game from "./Game";
 import "../Styles/App.css";
@@ -27,7 +28,20 @@ function App() {
                   Use your keyboard to guess a five letter word in six tries
                 </li>
                 <li>Hit Enter to submit your guess</li>
-                <li>The color of the tiles will change color to guide you</li>
+                <li>
+                  The color of the tiles will change color to guide you
+                  <div className="colors">
+                    <span className="correctCircle">
+                      <CircleIcon /> Correct letter and spot
+                    </span>
+                    <span className="foundCircle">
+                      <CircleIcon /> Correct letter but wrong spot
+                    </span>
+                    <span className="incorrectCircle">
+                      <CircleIcon /> Incorrect letter
+                    </span>
+                  </div>
+                </li>
                 <li>Select a level below</li>
               </ol>
             </DialogContent>

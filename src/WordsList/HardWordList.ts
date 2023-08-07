@@ -66,6 +66,7 @@ export const hardWordList = [
     'QUINT',
     'QUART',
     'RAVEL',
+    'SNAPE',
     'SPICY',
     'SWIRL',
     'TONIC',
