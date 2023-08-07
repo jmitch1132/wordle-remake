@@ -55,10 +55,7 @@ function Keyboard({
   return (
     <div className="keyboardSection">
       {rows.map((row, index) => (
-        <div
-          className={clsx("keyboardRow", index === 1 ? "secondRow" : "")}
-          key={index}
-        >
+        <div className="keyboardRow" key={index}>
           {row.map(renderKeyboardButton)}
         </div>
       ))}
