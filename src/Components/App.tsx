@@ -8,11 +8,11 @@ import "../Styles/App.css";
 function App() {
   const [level, setLevel] = useState<string>("");
   return (
-    <div className="container">
+    <>
       <h1 className="wordleHeader">Wordle</h1>
       {level && <Game level={level} setLevel={setLevel} />}
       <div>{!level && <HowToPlayModal setLevel={setLevel} />}</div>
-    </div>
+    </>
   );
 }
 
