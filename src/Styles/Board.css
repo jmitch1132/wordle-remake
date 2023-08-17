@@ -14,7 +14,6 @@
   height: 100%;
   max-width: 500px;
   margin: 0 auto;
-
   flex-grow: 1;
 }
 
@@ -26,7 +25,7 @@
 .box{
   height:50px;
   width:50px;
-  border: 2px solid #434343;
+  border: 2px solid rgb(63, 63, 63);;
   align-items: center;
   justify-content: center;
   display:flex;
@@ -47,7 +46,7 @@
   animation-duration: 0.5s;
 }
 .incorrect{
-  background-color: #434343;
+  background-color: rgb(63, 63, 63);
   animation-name: greyFade;
   animation-duration: 0.5s;
 }
@@ -62,6 +61,6 @@
 }
 @keyframes greyFade {
   from {background-color: rgb(28, 28, 28);}
-  to {background-color: #434343;}
+  to {background-color: rgb(63, 63, 63);}
 }
 
