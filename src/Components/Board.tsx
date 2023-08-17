@@ -25,7 +25,7 @@ function Board({
   addGuessedLetter,
 }: BoardProps) {
   const [currentGuess, setCurrentGuess] = useState("");
-  const [jump, setJump] = useState(false);
+
   const isValidKey = (key: string) => {
     return (
       (key.length === 1 && key.match(/[a-zA-Z]/i)) ||
@@ -61,11 +61,6 @@ function Board({
       if (currentGuess.length < 5) {
         setCurrentGuess((old) => old + key.toUpperCase());
       }
-
-      setJump(true);
-      setTimeout(() => {
-        setJump(false);
-      }, 500);
     },
     [
       answer,
@@ -97,7 +92,6 @@ function Board({
               guess={isCurrent ? currentGuess : guess ?? ""}
               answer={answer}
               oldGuess={!isCurrent && guess != null}
-              jump={jump}
             />
           );
         })}
@@ -116,12 +110,10 @@ function Row({
   guess,
   answer,
   oldGuess,
-  jump,
 }: {
   guess: string;
   answer: string;
   oldGuess: boolean;
-  jump: boolean;
 }) {
   const rows = [];
   for (let i = 0; i < WORD_LENGTH; i++) {
@@ -130,11 +122,7 @@ function Row({
     const isCorrect = answer[i] === letter;
     rows.push(
       <div
-        className={clsx(
-          "box",
-          jump ? "jumping" : "",
-          getColorClassname(isCorrect, found, oldGuess)
-        )}
+        className={clsx("box", getColorClassname(isCorrect, found, oldGuess))}
         key={i}
       >
         {letter}
