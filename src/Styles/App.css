@@ -7,6 +7,11 @@
 
 .wordleHeader {
     margin-bottom: 0;
+    color: white;
+}
+
+.container {
+    background-color: rgb(28, 28, 28);
 }
 
 .modalBody h4{
