@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/wordle-remake/static/css/main.e60a54b3.css",
-    "main.js": "/wordle-remake/static/js/main.37fe5900.js",
+    "main.css": "/wordle-remake/static/css/main.e33dd439.css",
+    "main.js": "/wordle-remake/static/js/main.6679370a.js",
     "index.html": "/wordle-remake/index.html",
-    "main.e60a54b3.css.map": "/wordle-remake/static/css/main.e60a54b3.css.map",
-    "main.37fe5900.js.map": "/wordle-remake/static/js/main.37fe5900.js.map"
+    "main.e33dd439.css.map": "/wordle-remake/static/css/main.e33dd439.css.map",
+    "main.6679370a.js.map": "/wordle-remake/static/js/main.6679370a.js.map"
   },
   "entrypoints": [
-    "static/css/main.e60a54b3.css",
-    "static/js/main.37fe5900.js"
+    "static/css/main.e33dd439.css",
+    "static/js/main.6679370a.js"
   ]
 }
