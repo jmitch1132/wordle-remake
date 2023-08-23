@@ -1,8 +1,8 @@
 # Remake of Wordle Game
-
+### Play the demo at: https://jmitch1132.github.io/wordle-remake/
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-![image](https://github.com/jmitch1132/wordle-remake/assets/73263392/dcf2c9e6-0eff-4732-92db-07a30d6df95a)
+![image](https://github.com/jmitch1132/wordle-remake/assets/73263392/6c9bd1fc-4d47-4c82-9848-ce247557a128)
 
 ![image](https://github.com/jmitch1132/wordle-remake/assets/73263392/b279bef6-980a-42a4-9779-db26a2b30d14)
 
